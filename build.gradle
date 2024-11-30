@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // persistence dependencies
+    implementation platform("org.hibernate.orm:hibernate-platform:6.6.1.Final")
+
+    // core dependency for entity mapping
+    implementation "org.hibernate.orm:hibernate-core"
+    // annotation processors dependency for generating jpa models
+    compileOnly "org.hibernate.orm:hibernate-jpamodelgen"
+    // jpa dependency for transactions
+    implementation "jakarta.transaction:jakarta.transaction-api"
+    // dependency for crating repositories without boilerplate code
+    implementation group: 'jakarta.data', name: 'jakarta.data-api', version: '1.0.1'
+
+    //dependency to reduce boilerplate code
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
+
+    //dependency for mapping entities to dto`s
+    implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.5.5.Final'
+
+    // <-- test dependencies -->
+
+    // test manager
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+
+}
+
+test {
+    useJUnitPlatform()
+}
