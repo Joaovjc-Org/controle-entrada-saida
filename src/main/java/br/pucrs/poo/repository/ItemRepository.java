@@ -1,19 +1,7 @@
 package br.pucrs.poo.repository;
 
-public class ItemRepository {
-    private String name;
-    private double price;
+import br.pucrs.poo.entity.Item;
+import jakarta.data.repository.CrudRepository;
 
-    public ItemRepository(String name, double price) {
-        this.name = name;
-        this.price = price;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
+public interface ItemRepository extends CrudRepository<Item, Long> {
 }

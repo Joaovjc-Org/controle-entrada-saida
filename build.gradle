@@ -33,7 +33,14 @@ dependencies {
     // test manager
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine'
 
+    // dependency for mocking tests
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.14.2'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.14.2'
+
+    //dependency for fluent assertions
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.26.3'
 
 }
 
