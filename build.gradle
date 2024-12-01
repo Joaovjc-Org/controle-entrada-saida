@@ -15,7 +15,6 @@ repositories {
 dependencies {
     //dependency for database configuration
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation group: 'com.h2database', name: 'h2', version: '2.2.224'
 
@@ -39,6 +38,8 @@ dependencies {
     //dependency for fluent assertions
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.26.3'
 
+    //dependency for testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
