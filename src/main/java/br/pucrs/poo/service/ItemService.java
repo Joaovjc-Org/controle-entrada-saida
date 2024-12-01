@@ -9,7 +9,7 @@ import java.util.List;
 public class ItemService {
     private ItemRepository itemRepository;
     public List<ItemDTO> recuperarTodosItens() {
-        return itemRepository.findAll()
+        return itemRepository.findAll().stream()
                 .map(ItemMapper.INSTANCE::toItemDTO)
                 .toList();
     }

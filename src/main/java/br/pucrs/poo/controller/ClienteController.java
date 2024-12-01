@@ -13,9 +13,7 @@ public class ClienteController implements ActionListener {
     public ClienteDTO criarCliente(ClienteDTO cliente) {
         return clienteService.cadastrarCliente(cliente);
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
 }

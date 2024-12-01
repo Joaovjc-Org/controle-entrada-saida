@@ -4,7 +4,6 @@ import br.pucrs.poo.dto.ItemDTO;
 import lombok.AllArgsConstructor;
 import java.util.List;
 import java.util.Scanner;
-
 @AllArgsConstructor
 public class ItemView {
     private ItemController itemController;
