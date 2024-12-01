@@ -1,13 +1,18 @@
 package br.pucrs.poo.view;
+import br.pucrs.poo.controller.ItemController;
+import br.pucrs.poo.dto.ItemDTO;
+import lombok.AllArgsConstructor;
+import java.util.List;
+import java.util.Scanner;
 
-import br.pucrs.poo.repository.ItemRepository;
-
+@AllArgsConstructor
 public class ItemView {
-    public void displayItems(java.util.List<ItemRepository> items) {
+    private ItemController itemController;
+    public void displayItens() {
         System.out.println("\n--- Cardápio ---");
-        for (int i = 0; i < items.size(); i++) {
-            ItemRepository item = items.get(i);
-            System.out.printf("%d. %s - R$ %.2f%n", i + 1, item.getName(), item.getPrice());
+        List<ItemDTO> itens = itemController.recuperarTodosItensCadastrados();
+        for (int i = 0; i < itens.size(); i++) {
+            System.out.printf("%d. %s - R$ %.2f%n", i + 1, itens.get(i).nome(), itens.get(i).preco());
         }
     }
 }

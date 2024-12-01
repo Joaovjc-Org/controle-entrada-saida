@@ -2,14 +2,15 @@ package br.pucrs.poo.controller;
 import br.pucrs.poo.dto.ClienteDTO;
 import br.pucrs.poo.service.ClienteService;
 import br.pucrs.poo.view.ClienteView;
-import lombok.AllArgsConstructor;
+
 
 import java.util.List;
 import java.util.Scanner;
 
-@AllArgsConstructor
+
+import lombok.RequiredArgsConstructor;
 public class ClienteController {
-    private final ClienteService clienteService;
+    private ClienteService clienteService;
     private ClienteView view;
     private Scanner scanner;
 
