@@ -3,10 +3,12 @@ import br.pucrs.poo.dto.ClienteDTO;
 import br.pucrs.poo.entity.Cliente;
 import br.pucrs.poo.mapper.ClienteMapper;
 import br.pucrs.poo.repository.ClienteRepository;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.Optional;
-
+@Service
 public class ClienteService {
+    @Autowired
     private ClienteRepository clienteRepository;
     public ClienteDTO cadastrarCliente(ClienteDTO cliente) {
         Optional<Cliente> byCpf = clienteRepository.findByCpf(cliente.cpf());

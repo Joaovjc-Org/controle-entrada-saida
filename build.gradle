@@ -1,5 +1,8 @@
 plugins {
     id 'java'
+    // springboot ecosystem configurator
+    id 'org.springframework.boot' version '3.4.0'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'org.example'
@@ -10,17 +13,11 @@ repositories {
 }
 
 dependencies {
-    // persistence dependencies
-    implementation platform("org.hibernate.orm:hibernate-platform:6.6.1.Final")
+    //dependency for database configuration
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // core dependency for entity mapping
-    implementation "org.hibernate.orm:hibernate-core"
-    // annotation processors dependency for generating jpa models
-    compileOnly "org.hibernate.orm:hibernate-jpamodelgen"
-    // jpa dependency for transactions
-    implementation "jakarta.transaction:jakarta.transaction-api"
-    // dependency for crating repositories without boilerplate code
-    implementation group: 'jakarta.data', name: 'jakarta.data-api', version: '1.0.1'
+    implementation group: 'com.h2database', name: 'h2', version: '2.2.224'
 
     //dependency to reduce boilerplate code
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.36'

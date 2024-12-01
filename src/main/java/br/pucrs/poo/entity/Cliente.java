@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import java.time.LocalDateTime;
 import java.util.List;
-
 @Entity
 @Table(name = "CLIENTE")
 @Getter
