@@ -28,4 +28,6 @@ public class Comanda {
     private Cliente cliente;
     @ManyToOne(targetEntity = Folha.class, fetch = FetchType.LAZY)
     private Folha folha;
+    
+    
 }
