@@ -1,7 +1,7 @@
 package br.pucrs.poo.view;
 
 import br.pucrs.poo.controller.ComandaController;
-import br.pucrs.poo.dto.BalanceteDTO;
+import br.pucrs.poo.dto.GastoTotalDTO;
 import br.pucrs.poo.dto.ComandaDTO;
 
 import java.util.Scanner;
