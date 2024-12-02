@@ -1,6 +1,6 @@
 package br.pucrs.poo.controller;
 
-import br.pucrs.poo.dto.BalanceteDTO;
+import br.pucrs.poo.dto.GastoTotalDTO;
 import br.pucrs.poo.service.BalanceteService;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class BalanceteController {
         this.balanceteService = balanceteService;
     }
 
-    public List<BalanceteDTO> gerarBalanceteDiario() {
+    public List<GastoTotalDTO> gerarBalanceteDiario() {
         return balanceteService.gerarBalanceteDiario();
     }
 }

@@ -5,7 +5,7 @@ import br.pucrs.poo.entity.Comanda;
 import br.pucrs.poo.entity.Gasto;
 import br.pucrs.poo.mapper.ComandaMapper;
 import br.pucrs.poo.repository.ComandaRepository;
-import br.pucrs.poo.dto.BalanceteDTO;
+import br.pucrs.poo.dto.GastoTotalDTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -70,6 +70,26 @@ public class ComandaService {
         comandaRepository.save(comanda); // Atualiza a comanda com o novo débito.
     }
 
+    public void fecharConta(String codigoComanda) {
+        // Buscar comanda pelo código.
+        Optional<Comanda> comandaOptional = comandaRepository.findByCodigoComanda(codigoComanda);
+        if (comandaOptional.isEmpty()) {
+            throw new RuntimeException("Comanda não encontrada para o código fornecido!");
+        }
+
+        Comanda comanda = comandaOptional.get();
+        
+        // Calcular o total dos gastos.
+        BigDecimal total = comanda.getGastos().stream()
+            .map(Gasto::getValorPago) // Corrigido para o método correto
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        
+        comanda.setDataFechamento(LocalDateTime.now()); // Supondo que há um campo data de fechamento
+        comanda.setTotal(total); // Supondo que há um campo total na comanda
+
+        comandaRepository.save(comanda); // Atualiza a comanda com as informações de fechamento.
+    }
 
     
 }

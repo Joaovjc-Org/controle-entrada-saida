@@ -1,6 +1,6 @@
 package br.pucrs.poo.service;
 
-import br.pucrs.poo.dto.BalanceteDTO;
+import br.pucrs.poo.dto.GastoTotalDTO;
 import br.pucrs.poo.entity.Comanda;
 import br.pucrs.poo.repository.ComandaRepository;
 
@@ -17,26 +17,15 @@ public class BalanceteService {
         this.comandaRepository = comandaRepository;
     }
 
-    public List<BalanceteDTO> gerarBalanceteDiario() {
+    public List<GastoTotalDTO> gerarBalanceteDiario() {
         // Recuperar todas as comandas do dia
         List<Comanda> comandasDoDia = comandaRepository.findAllByDataAtual();
 
         // Agrupar os gastos por cliente
-        Map<String, BigDecimal> gastosPorCliente = comandasDoDia.stream()
-                .collect(Collectors.groupingBy(
-                        Comanda::getNomeCliente,
-                        Collectors.reducing(
-                                BigDecimal.ZERO,
-                                comanda -> comanda.getItens().stream()
-                                        .map(item -> item.getPreco().multiply(BigDecimal.valueOf(item.getQuantidade())))
-                                        .reduce(BigDecimal.ZERO, BigDecimal::add),
-                                BigDecimal::add
-                        )
-                ));
-
-        // Converter para uma lista de DTOs
-        return gastosPorCliente.entrySet().stream()
-                .map(entry -> new BalanceteDTO(entry.getKey(), entry.getValue()))
+        List<GastoTotalDTO> gastosPorCliente = comandasDoDia.stream()
+                .map(comanda-> new GastoTotalDTO(comanda.getCliente().getNome(), comanda.getGastoTotal()))
                 .toList();
+        
+        return gastosPorCliente;
     }
 }
