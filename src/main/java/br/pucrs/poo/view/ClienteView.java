@@ -8,13 +8,15 @@ import br.pucrs.poo.dto.ClienteDTO;
 import java.util.List;
 
 public class ClienteView {
-
+    
     private ClienteController clienteController;
 
     public void mostrarClientes() {
-        clienteController.listarClientes();
+        
+        List<ClienteDTO>  clientes = clienteController.listarClientes();
         System.out.println("\n=== Lista de Clientes ===");
-        if (clientes.isEmpty()) {
+        
+                if (clientes.isEmpty()) {
             System.out.println("Nenhum cliente cadastrado.");
             return;
         }

@@ -29,4 +29,17 @@ public class ClienteService {
                 .map(ClienteMapper.INSTANCE::toClienteDTO)
                 .collect(Collectors.toList());
     }
+
+    public ClienteDTO buscarClientePorId(Long id) {
+        return clienteRepository.findById(id)
+                .map(ClienteMapper.INSTANCE::toClienteDTO)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+    }
+
+    public List<ClienteDTO> buscarClientesPorNome(String nome) {
+        return clienteRepository.findByNomeContainingIgnoreCase(nome)
+                .stream()
+                .map(ClienteMapper.INSTANCE::toClienteDTO)
+                .collect(Collectors.toList());
+    }
 }
