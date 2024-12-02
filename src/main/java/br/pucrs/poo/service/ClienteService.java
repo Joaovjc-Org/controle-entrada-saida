@@ -29,6 +29,7 @@ public class ClienteService {
 
     public List<ClienteDTO> listarClientes() {
         return clienteRepository.findAll()
+                .stream()
                 .map(ClienteMapper.INSTANCE::toClienteDTO)
                 .collect(Collectors.toList());
     }
