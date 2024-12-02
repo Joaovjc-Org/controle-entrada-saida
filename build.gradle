@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    // springboot ecosystem configurator
+    id 'org.springframework.boot' version '3.4.0'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //dependency for database configuration
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation group: 'com.h2database', name: 'h2', version: '2.2.224'
+
+    //dependency to reduce boilerplate code
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
+
+    //dependency for mapping entities to dto`s
+    implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.5.5.Final'
+
+    // <-- test dependencies -->
+
+    // test manager
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine'
+
+    // dependency for mocking tests
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.14.2'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.14.2'
+
+    //dependency for fluent assertions
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.26.3'
+
+    //dependency for testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
