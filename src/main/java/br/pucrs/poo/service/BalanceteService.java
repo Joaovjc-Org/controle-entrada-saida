@@ -17,8 +17,15 @@ public class BalanceteService {
         this.comandaRepository = comandaRepository;
     }
 
+    public BigDecimal calcularBalancete(List<Comanda> comandas) {
+        return comandas.stream()
+            .map(Comanda::getGastoTotal)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+    
+
     public List<GastoTotalDTO> gerarBalanceteDiario() {
-        // Recuperar todas as comandas do dia
+        
         List<Comanda> comandasDoDia = comandaRepository.findAllByDataAtual();
 
         // Agrupar os gastos por cliente
@@ -27,5 +34,19 @@ public class BalanceteService {
                 .toList();
         
         return gastosPorCliente;
+    }
+
+    public void fecharDia() {
+       
+        List<Comanda> comandasDoDia = comandaRepository.findAllByDataAtual();
+        
+        
+        for (Comanda comanda : comandasDoDia) {
+           
+            System.out.println("Fechando comanda: " + comanda.getId() + " com total: " + comanda.getGastoTotal());
+            
+        }
+        
+       
     }
 }

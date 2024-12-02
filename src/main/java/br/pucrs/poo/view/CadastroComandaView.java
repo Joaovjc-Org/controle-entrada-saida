@@ -3,18 +3,35 @@ package br.pucrs.poo.view;
 import br.pucrs.poo.controller.ComandaController;
 import br.pucrs.poo.dto.GastoTotalDTO;
 import br.pucrs.poo.dto.ComandaDTO;
+import br.pucrs.poo.controller.StartupPageController;
 
 import java.util.Scanner;
 import java.util.List;
 
 public class CadastroComandaView {
     private final ComandaController comandaController;
-    private final Scanner scanner;
+    private static Scanner scanner;
+        private static StartupPageController startupPageController;
+                    
+                        static void fazerPedido() {
+                            System.out.print("Digite o ID da comanda: ");
+                            Long comandaId = scanner.nextLong();
+                    
+                        System.out.print("Digite o ID do item: ");
+                        Long itemId = scanner.nextLong();
+                    
+                        System.out.print("Digite a quantidade: ");
+                        int quantidade = scanner.nextInt();
+                    
+                        startupPageController.fazerPedido(comandaId, itemId, quantidade);
+    }
+    
 
 
-    public CadastroComandaView(ComandaController comandaController) {
+    public CadastroComandaView(ComandaController comandaController, StartupPageController startupPageController) {
         this.comandaController = comandaController;
         this.scanner = new Scanner(System.in);
+        this.startupPageController = startupPageController;
     }
 
     public void criarComanda() {

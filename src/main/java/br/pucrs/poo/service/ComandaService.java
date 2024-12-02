@@ -3,9 +3,11 @@ package br.pucrs.poo.service;
 import br.pucrs.poo.dto.ComandaDTO;
 import br.pucrs.poo.entity.Comanda;
 import br.pucrs.poo.entity.Gasto;
+import br.pucrs.poo.entity.Item;
 import br.pucrs.poo.mapper.ComandaMapper;
 import br.pucrs.poo.repository.ComandaRepository;
 import br.pucrs.poo.dto.GastoTotalDTO;
+import br.pucrs.poo.repository.ItemRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,11 +20,65 @@ import java.util.Map;
 public class ComandaService {
 
     private final ComandaRepository comandaRepository;
+    private final ItemRepository itemRepository;
 
     
-    public ComandaService(ComandaRepository comandaRepository) {
+    public ComandaService(ComandaRepository comandaRepository, ItemRepository itemRepository) {
         this.comandaRepository = comandaRepository;
+        this.itemRepository = itemRepository;
     }
+
+    public void adicionarItem(Long comandaId, Long itemId, int quantidade) {
+        Comanda comanda = comandaRepository.findById(comandaId)
+                .orElseThrow(() -> new RuntimeException("Comanda não encontrada!"));
+    
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item não encontrado!"));
+    
+        BigDecimal valorTotalItem = item.getPreco().multiply(BigDecimal.valueOf(quantidade));
+    
+        Gasto gasto = new Gasto();
+        gasto.setItemGasto(item);
+        gasto.valorGasto(valorTotalItem);
+        comanda.getGastos().add(gasto);
+    
+        comanda.setGastoTotal(comanda.getGastoTotal().add(valorTotalItem));
+        comandaRepository.save(comanda);
+    }
+    
+
+    private boolean sistemaAtivo = true;
+
+public void fecharDia() {
+    if (!sistemaAtivo) {
+        throw new RuntimeException("O dia já foi encerrado!");
+    }
+
+    sistemaAtivo = false; // Bloqueia novos pedidos.
+
+    // Calcula o total de todas as comandas fechadas.
+    List<Comanda> comandas = comandaRepository.findAllByDataPagamentoNotNull();
+    BigDecimal totalDia = comandas.stream()
+        .map(Comanda::getGastoTotal)
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+    // Exibe o balancete do dia.
+    System.out.println("=== Balancete do Dia ===");
+    System.out.println("Total arrecadado: " + totalDia);
+    System.out.println("Número de comandas fechadas: " + comandas.size());
+}
+
+public void iniciarNovoDia() {
+    sistemaAtivo = true; // Permite novos pedidos.
+    System.out.println("Novo dia iniciado!");
+}
+
+// Valida se o sistema está ativo antes de aceitar novos pedidos.
+public void verificarSistemaAtivo() {
+    if (!sistemaAtivo) {
+        throw new RuntimeException("Não é possível cadastrar novos pedidos. O dia foi encerrado!");
+    }
+}
 
     public ComandaDTO criarComanda(ComandaDTO comandaDTO) {
         // Verificar se o cliente já possui uma comanda ativa.
@@ -90,6 +146,21 @@ public class ComandaService {
 
         comandaRepository.save(comanda); // Atualiza a comanda com as informações de fechamento.
     }
+
+    public BigDecimal fecharComanda(Long comandaId) {
+        Comanda comanda = comandaRepository.findById(comandaId)
+                .orElseThrow(() -> new RuntimeException("Comanda não encontrada!"));
+    
+        if (comanda.getDataPagamento() != null) {
+            throw new RuntimeException("A comanda já foi paga!");
+        }
+    
+        comanda.setDataPagamento(LocalDateTime.now());
+        comandaRepository.save(comanda);
+    
+        return comanda.getGastoTotal();
+    }
+    
 
     
 }
