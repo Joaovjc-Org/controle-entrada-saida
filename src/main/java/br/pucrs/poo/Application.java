@@ -24,3 +24,4 @@ public class Application implements CommandLineRunner {
         SwingUtilities.invokeLater(() -> TelaPrincipalFrame.startGUI(args));
     }
 }
+

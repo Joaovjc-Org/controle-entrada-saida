@@ -2,10 +2,13 @@ package br.pucrs.poo.view;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
+import org.springframework.stereotype.Component;
+
 import java.awt.*;
 
 import static java.awt.Color.*;
-
+@Component
 public class PlaceholderCard extends JPanel {
     public PlaceholderCard() {
         this.setLayout(new BorderLayout(8,6));

@@ -3,10 +3,12 @@ import br.pucrs.poo.dto.ClienteDTO;
 import br.pucrs.poo.service.ClienteService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ClienteController {
     @Autowired
     private final ClienteService clienteService;
