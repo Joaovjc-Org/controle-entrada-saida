@@ -1,40 +1,27 @@
 package br.pucrs.poo.controller;
 
-import java.util.Scanner;
-
+import br.pucrs.poo.dto.BalanceteDTO;
+import br.pucrs.poo.dto.ComandaDTO;
 import br.pucrs.poo.service.ComandaService;
-import br.pucrs.poo.view.CadastroComandaView;
+import java.util.List;
 
 public class ComandaController {
+    private final ComandaService comandaService;
 
-    private final CadastroComandaView comandaView;
-
-    public ComandaController(ComandaService comandaService) {
-        this.comandaView = new CadastroComandaView(comandaService);
+    public List<BalanceteDTO> gerarBalanceteDiario() {
+        return comandaService.gerarBalanceteDiario();
     }
 
-    public void iniciar() {
-        boolean continuar = true;
+    public ComandaController(ComandaService comandaService) {
+        this.comandaService = comandaService;
+    }
 
-        while (continuar) {
-            System.out.println("\n=== Sistema de Comandas ===");
-            System.out.println("1. Criar Comanda");
-            System.out.println("2. Buscar Comanda");
-            System.out.println("0. Sair");
-            System.out.print("Escolha uma opção: ");
+    public ComandaDTO criarComanda(Long clienteId, Long folhaId) {
+        ComandaDTO novaComanda = new ComandaDTO(null, null, null, null, null, clienteId, folhaId);
+        return comandaService.criarComanda(novaComanda);
+    }
 
-            Scanner scanner = new Scanner(System.in);
-            int opcao = scanner.nextInt();
-
-            switch (opcao) {
-                case 1 -> comandaView.criarComanda();
-                case 2 -> comandaView.buscarComanda();
-                case 0 -> {
-                    continuar = false;
-                    System.out.println("Sistema encerrado!");
-                }
-                default -> System.out.println("Opção inválida!");
-            }
-        }
+    public ComandaDTO buscarComandaPorId(Long id) {
+        return comandaService.buscarComandaPorId(id);
     }
 }

@@ -1,8 +1,37 @@
-import java.util.Scanner;
+package br.pucrs.poo.view;
+
+import br.pucrs.poo.controller.ComandaController;
+import br.pucrs.poo.dto.BalanceteDTO;
 import br.pucrs.poo.dto.ComandaDTO;
 
+import java.util.Scanner;
+import java.util.List;
+
 public class CadastroComandaView {
-    private Scanner scanner = new Scanner(System.in);
+    private final ComandaController comandaController;
+    private final Scanner scanner;
+
+
+    public void exibirBalancete() {
+        System.out.println("\n--- Balancete do Dia ---");
+
+        List<BalanceteDTO> balancete = comandaController.gerarBalanceteDiario();
+
+        if (balancete.isEmpty()) {
+            System.out.println("Nenhum consumo registrado no dia.");
+        } else {
+            for (BalanceteDTO cliente : balancete) {
+                System.out.printf("Cliente: %s | Total Gasto: R$ %.2f%n",
+                        cliente.getNomeCliente(),
+                        cliente.getTotalGasto());
+            }
+        }
+    }
+
+    public CadastroComandaView(ComandaController comandaController) {
+        this.comandaController = comandaController;
+        this.scanner = new Scanner(System.in);
+    }
 
     public void criarComanda() {
         System.out.println("\n=== Cadastro de Comanda ===");
@@ -13,34 +42,23 @@ public class CadastroComandaView {
         System.out.print("Digite o ID da folha associada: ");
         Long folhaId = scanner.nextLong();
 
-        ComandaDTO novaComanda = new ComandaDTO(null, null, null, null, null, clienteId, folhaId);
-
         try {
-            ComandaDTO comandaCriada = comandaService.criarComanda(novaComanda);
+            ComandaDTO comandaCriada = comandaController.criarComanda(clienteId, folhaId);
             System.out.println("Comanda criada com sucesso!");
             System.out.println("Código da Comanda: " + comandaCriada.getCodigoComanda());
         } catch (RuntimeException e) {
-            System.out.println("Erro: " + e.getMessage());
+            System.out.println("Erro ao criar comanda: " + e.getMessage());
         }
     }
 
-    public void adicionarDebito() {
-        System.out.println("\n=== Adicionar Débito à Comanda ===");
-
-        System.out.print("Digite o código da comanda: ");
-        String codigoComanda = scanner.next();
-
-        System.out.print("Digite a descrição do débito: ");
-        String descricao = scanner.next();
-
-        System.out.print("Digite o valor do débito: ");
-        double valor = scanner.nextDouble();
-
-        Gasto novoGasto = new Gasto(descricao, valor);
+    public void buscarComanda() {
+        System.out.print("Digite o ID da comanda que deseja buscar: ");
+        Long id = scanner.nextLong();
 
         try {
-            comandaService.adicionarDebito(codigoComanda, novoGasto);
-            System.out.println("Débito adicionado com sucesso!");
+            ComandaDTO comanda = comandaController.buscarComandaPorId(id);
+            System.out.println("Detalhes da Comanda:");
+            System.out.println(comanda);
         } catch (RuntimeException e) {
             System.out.println("Erro: " + e.getMessage());
         }
