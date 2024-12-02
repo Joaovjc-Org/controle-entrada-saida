@@ -8,24 +8,17 @@ import br.pucrs.poo.mapper.ComandaMapper;
 import br.pucrs.poo.repository.ComandaRepository;
 import br.pucrs.poo.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
-
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Service
 public class ComandaService {
-    @Autowired
-
     private final ComandaRepository comandaRepository;
     private final ItemRepository itemRepository;
 
@@ -38,7 +31,7 @@ public class ComandaService {
 
         BigDecimal valorTotalItem = item.getPreco().multiply(BigDecimal.valueOf(quantidade));
 
-        
+
 
         List<Gasto> gastos = IntStream.range(0, quantidade)
                 .mapToObj(i -> Gasto.builder()
@@ -141,7 +134,7 @@ public class ComandaService {
 
         Comanda comanda = comandaOptional.get();
 
-        comanda.setDataFechamento(LocalDateTime.now()); // Supondo que há um campo data de fechamento
+        comanda.setDataPagamento(LocalDateTime.now());
 
         comandaRepository.save(comanda); // Atualiza a comanda com as informações de fechamento.
     }

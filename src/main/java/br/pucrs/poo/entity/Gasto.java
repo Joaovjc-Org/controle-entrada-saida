@@ -23,5 +23,4 @@ public class Gasto {
     private Item item;
     @Column(name="VALOR_PAGO", nullable = false)
     private BigDecimal valorPago;
-    
 }

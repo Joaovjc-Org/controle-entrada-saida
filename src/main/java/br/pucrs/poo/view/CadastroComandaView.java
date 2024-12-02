@@ -1,46 +1,34 @@
 package br.pucrs.poo.view;
-
 import br.pucrs.poo.controller.ComandaController;
-import br.pucrs.poo.dto.GastoTotalDTO;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import br.pucrs.poo.dto.ComandaDTO;
 import br.pucrs.poo.controller.StartupPageController;
-
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 @Component
-@RequiredArgsConstructor
 public class CadastroComandaView {
-
     @Autowired
-    private final ComandaController comandaController;
-    private static Scanner scanner;
-        private static StartupPageController startupPageController;
-                    
-                        static void fazerPedido() {
-                            System.out.print("Digite o ID da comanda: ");
-                            Long comandaId = scanner.nextLong();
-                    
-                        System.out.print("Digite o ID do item: ");
-                        Long itemId = scanner.nextLong();
-                    
-                        System.out.print("Digite a quantidade: ");
-                        int quantidade = scanner.nextInt();
-                    
-                        startupPageController.fazerPedido(comandaId, itemId, quantidade);
+    private ComandaController comandaController;
+    @Autowired
+    private StartupPageController startupPageController;
+    private Scanner scanner;
+
+    public void fazerPedido() {
+        System.out.print("Digite o ID da comanda: ");
+        Long comandaId = scanner.nextLong();
+
+        System.out.print("Digite o ID do item: ");
+        Long itemId = scanner.nextLong();
+
+        System.out.print("Digite a quantidade: ");
+        int quantidade = scanner.nextInt();
+
+        startupPageController.fazerPedido(comandaId, itemId, quantidade);
     }
-    
 
-
-    public CadastroComandaView(ComandaController comandaController, StartupPageController startupPageController) {
-        this.comandaController = comandaController;
+    public CadastroComandaView() {
         this.scanner = new Scanner(System.in);
-        this.startupPageController = startupPageController;
     }
 
     public void criarComanda() {

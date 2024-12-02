@@ -16,7 +16,7 @@ public class BalanceteController {
 
     private final BalanceteService balanceteService;
 
-    
+
 
     public List<GastoTotalDTO> gerarBalanceteDiario() {
         return balanceteService.gerarBalanceteDiario();
