@@ -52,7 +52,7 @@ public class TelaPrincipalFrame extends JFrame{
                 cl.show(cards, FOLHA.name());
                 cards.revalidate();
                 cards.repaint();
-                telaAtual = CLIENTE;
+                telaAtual = FOLHA;
             }
         });
         headerOpcoes.add(buttonFolha);
@@ -63,7 +63,7 @@ public class TelaPrincipalFrame extends JFrame{
                 cl.show(cards, ITEM.name());
                 cards.revalidate();
                 cards.repaint();
-                telaAtual = CLIENTE;
+                telaAtual = ITEM;
             }
         });
         headerOpcoes.add(buttonItem);

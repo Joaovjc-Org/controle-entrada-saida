@@ -24,8 +24,8 @@ public class StartupPage {
                     System.out.println("Sistema encerrado!");
                 }
                 case 1 -> itemView.displayItens();
-                case 2 -> itemView.fazerPedido();
-                case 3 -> itemView.fecharConta();
+//                case 2 -> itemView.fazerPedido();
+//                case 3 -> itemView.fecharConta();
                 default -> System.out.println("Opção inválida!");
             }
         }
