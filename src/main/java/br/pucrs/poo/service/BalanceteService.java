@@ -9,9 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BalanceteService {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-    private final ComandaRepository comandaRepository;
+@Service
+public class BalanceteService {
+@Autowired
+    private ComandaRepository comandaRepository;
 
     public BalanceteService(ComandaRepository comandaRepository) {
         this.comandaRepository = comandaRepository;

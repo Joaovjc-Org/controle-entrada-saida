@@ -4,18 +4,19 @@ import br.pucrs.poo.dto.GastoTotalDTO;
 import br.pucrs.poo.entity.Gasto;
 import br.pucrs.poo.service.BalanceteService;
 import br.pucrs.poo.service.ComandaService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+@RequiredArgsConstructor
 public class StartupPageController {
-
+    @Autowired
     private final ComandaService comandaService;
     private final BalanceteService balanceteService;
 
-    public StartupPageController(ComandaService comandaService, BalanceteService balanceteService) {
-        this.comandaService = comandaService;
-        this.balanceteService = balanceteService;
-    }
+
 
     public void fecharConta(String codigoComanda) {
         comandaService.fecharConta(codigoComanda);

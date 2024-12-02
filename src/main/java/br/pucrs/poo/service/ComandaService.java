@@ -17,10 +17,14 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Map;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Service
 public class ComandaService {
+    @Autowired
 
     private final ComandaRepository comandaRepository;
     private final ItemRepository itemRepository;

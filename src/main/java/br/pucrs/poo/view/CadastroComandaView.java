@@ -2,13 +2,22 @@ package br.pucrs.poo.view;
 
 import br.pucrs.poo.controller.ComandaController;
 import br.pucrs.poo.dto.GastoTotalDTO;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import br.pucrs.poo.dto.ComandaDTO;
 import br.pucrs.poo.controller.StartupPageController;
 
 import java.util.Scanner;
-import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+@Component
+@RequiredArgsConstructor
 public class CadastroComandaView {
+
+    @Autowired
     private final ComandaController comandaController;
     private static Scanner scanner;
         private static StartupPageController startupPageController;

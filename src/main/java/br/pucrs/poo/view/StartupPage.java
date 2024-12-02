@@ -4,12 +4,17 @@ import br.pucrs.poo.controller.StartupPageController;
 import br.pucrs.poo.dto.GastoTotalDTO;
 import br.pucrs.poo.service.ComandaService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Scanner;
 
-@AllArgsConstructor
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+@Component
+@RequiredArgsConstructor
 public class StartupPage {
+    @Autowired
     private final StartupPageController startupPageController;
     private final ItemView itemView;
     private final ComandaService comandaService;

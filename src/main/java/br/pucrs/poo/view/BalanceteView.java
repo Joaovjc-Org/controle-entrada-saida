@@ -2,16 +2,18 @@ package br.pucrs.poo.view;
 
 import br.pucrs.poo.controller.BalanceteController;
 import br.pucrs.poo.dto.GastoTotalDTO;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+@RequiredArgsConstructor
+@Component
 public class BalanceteView {
-
+    @Autowired
     private final BalanceteController balanceteController;
 
-    public BalanceteView(BalanceteController balanceteController) {
-        this.balanceteController = balanceteController;
-    }
 
     public void exibirBalanceteDiario() {
         System.out.println("\n--- Balancete Diário ---");
