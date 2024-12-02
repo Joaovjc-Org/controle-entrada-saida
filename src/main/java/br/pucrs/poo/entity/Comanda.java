@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 @Entity
 @Table(name = "COMANDA")
@@ -36,8 +37,7 @@ public class Comanda {
     private Folha folha;
     @Column(name = "DATA_FECHAMENTO", nullable = false)
     private LocalDateTime dataFechamento;
-    
-    public void setTotal(BigDecimal gastoTotal) {
-        this.gastoTotal = gastoTotal;
+    public void addAllGastos(Collection <Gasto> gastos){
+        gastos.addAll(gastos);
     }
 }

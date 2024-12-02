@@ -1,17 +1,18 @@
 package br.pucrs.poo.view;
-
 import br.pucrs.poo.controller.StartupPageController;
 import br.pucrs.poo.dto.GastoTotalDTO;
-import lombok.AllArgsConstructor;
-
+import br.pucrs.poo.service.ComandaService;
 import java.util.List;
 import java.util.Scanner;
-
-@AllArgsConstructor
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+@Component
+@RequiredArgsConstructor(onConstructor_ = @__(@Autowired))
 public class StartupPage {
     private final StartupPageController startupPageController;
+    private final ComandaService comandaService;
     private final ItemView itemView;
-
     public void iniciarInterface() {
         boolean executar = true;
         Scanner scanner = new Scanner(System.in);
@@ -21,7 +22,9 @@ public class StartupPage {
             System.out.println("1. Ver Menu");
             System.out.println("2. Fazer Pedido");
             System.out.println("3. Fechar Conta");
-            System.out.println("4. Gerar Balancete Diário");
+            System.out.println("4. Fechar Dia");
+            System.out.println("5. Gerar Balancete Diário");
+            System.out.println("6. Iniciar Novo Dia");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
@@ -33,7 +36,14 @@ public class StartupPage {
                     System.out.println("Sistema encerrado!");
                 }
                 case 1 -> itemView.displayItens();
-                case 2 -> itemView.fazerPedido();
+                case 2 -> {
+                    try {
+                        comandaService.verificarSistemaAtivo();
+                        CadastroComandaView.fazerPedido();
+                    } catch (RuntimeException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
                 case 3 -> {
                     System.out.print("Digite o código da comanda para fechar a conta: ");
                     String codigoComanda = scanner.nextLine();
@@ -44,12 +54,46 @@ public class StartupPage {
                         System.out.println("Erro ao fechar conta: " + e.getMessage());
                     }
                 }
-                case 4 -> gerarBalanceteDiario();
+                case 4 -> startupPageController.fecharDia();
+                case 5 -> gerarBalanceteDiario();
+                case 6 -> startupPageController.iniciarNovoDia();
                 default -> System.out.println("Opção inválida!");
             }
         }
         scanner.close();
     }
+
+
+    private void gerarBalanceteDiario() {
+        System.out.println("\n--- Balancete Diário ---");
+        List<GastoTotalDTO> balancete = startupPageController.gerarBalanceteDiario();
+
+        if (balancete.isEmpty()) {
+            System.out.println("Nenhum gasto registrado para hoje.");
+            return;
+        }
+
+        for (GastoTotalDTO item : balancete) {
+            System.out.printf("Cliente: %s | Total Gasto: R$ %.2f%n",
+                    item.nomeCliente(), item.gastoTotal());
+        }
+    }
+
+    private void fecharConta() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite o ID da comanda: ");
+        String comandaId = scanner.nextLine();
+
+        try {
+            startupPageController.fecharConta(comandaId);
+        } catch (RuntimeException e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
+
+
 
     private void gerarBalanceteDiario() {
         System.out.println("\n--- Balancete Diário ---");

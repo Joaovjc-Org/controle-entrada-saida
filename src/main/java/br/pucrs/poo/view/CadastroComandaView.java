@@ -1,19 +1,33 @@
 package br.pucrs.poo.view;
-
 import br.pucrs.poo.controller.ComandaController;
-import br.pucrs.poo.dto.GastoTotalDTO;
 import br.pucrs.poo.dto.ComandaDTO;
-
+import br.pucrs.poo.controller.StartupPageController;
 import java.util.Scanner;
-import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+@Component
 public class CadastroComandaView {
-    private final ComandaController comandaController;
-    private final Scanner scanner;
+    @Autowired
+    private ComandaController comandaController;
+    @Autowired
+    private StartupPageController startupPageController;
+    private Scanner scanner;
 
+    public void fazerPedido() {
+        System.out.print("Digite o ID da comanda: ");
+        Long comandaId = scanner.nextLong();
 
-    public CadastroComandaView(ComandaController comandaController) {
-        this.comandaController = comandaController;
+        System.out.print("Digite o ID do item: ");
+        Long itemId = scanner.nextLong();
+
+        System.out.print("Digite a quantidade: ");
+        int quantidade = scanner.nextInt();
+
+        startupPageController.fazerPedido(comandaId, itemId, quantidade);
+    }
+
+    public CadastroComandaView() {
         this.scanner = new Scanner(System.in);
     }
 

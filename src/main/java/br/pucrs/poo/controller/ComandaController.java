@@ -2,16 +2,14 @@ package br.pucrs.poo.controller;
 
 import br.pucrs.poo.dto.ComandaDTO;
 import br.pucrs.poo.service.ComandaService;
-import java.util.List;
-
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+@Component
 public class ComandaController {
-    private final ComandaService comandaService;
 
-    
-
-    public ComandaController(ComandaService comandaService) {
-        this.comandaService = comandaService;
-    }
+    @Autowired
+    private ComandaService comandaService;
 
     public ComandaDTO criarComanda(Long clienteId, Long folhaId) {
         ComandaDTO novaComanda = new ComandaDTO(null, null, null, null, null, clienteId, folhaId);
