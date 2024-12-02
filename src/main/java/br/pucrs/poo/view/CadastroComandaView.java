@@ -1,19 +1,8 @@
-package br.pucrs.poo.view;
-
-import br.pucrs.poo.dto.ComandaDTO;
-import br.pucrs.poo.service.ComandaService;
-
 import java.util.Scanner;
+import br.pucrs.poo.dto.ComandaDTO;
 
 public class CadastroComandaView {
-
-    private final ComandaService comandaService;
-    private final Scanner scanner;
-
-    public CadastroComandaView(ComandaService comandaService) {
-        this.comandaService = comandaService;
-        this.scanner = new Scanner(System.in);
-    }
+    private Scanner scanner = new Scanner(System.in);
 
     public void criarComanda() {
         System.out.println("\n=== Cadastro de Comanda ===");
@@ -31,18 +20,27 @@ public class CadastroComandaView {
             System.out.println("Comanda criada com sucesso!");
             System.out.println("Código da Comanda: " + comandaCriada.getCodigoComanda());
         } catch (RuntimeException e) {
-            System.out.println("Erro ao criar comanda: " + e.getMessage());
+            System.out.println("Erro: " + e.getMessage());
         }
     }
 
-    public void buscarComanda() {
-        System.out.print("Digite o ID da comanda que deseja buscar: ");
-        Long id = scanner.nextLong();
+    public void adicionarDebito() {
+        System.out.println("\n=== Adicionar Débito à Comanda ===");
+
+        System.out.print("Digite o código da comanda: ");
+        String codigoComanda = scanner.next();
+
+        System.out.print("Digite a descrição do débito: ");
+        String descricao = scanner.next();
+
+        System.out.print("Digite o valor do débito: ");
+        double valor = scanner.nextDouble();
+
+        Gasto novoGasto = new Gasto(descricao, valor);
 
         try {
-            ComandaDTO comanda = comandaService.buscarComandaPorId(id);
-            System.out.println("Detalhes da Comanda:");
-            System.out.println(comanda);
+            comandaService.adicionarDebito(codigoComanda, novoGasto);
+            System.out.println("Débito adicionado com sucesso!");
         } catch (RuntimeException e) {
             System.out.println("Erro: " + e.getMessage());
         }
