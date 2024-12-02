@@ -7,4 +7,6 @@ import java.util.Optional;
 @Repository
 public interface ComandaRepository extends JpaRepository<Comanda, Long> {
     Optional<Comanda> findById(Long id);
+    Optional<Comanda> findByClienteIdAndDataPagamentoIsNull(Long clienteId);
+    Optional<Comanda> findByCodigoComanda(String codigoComanda);
 }
