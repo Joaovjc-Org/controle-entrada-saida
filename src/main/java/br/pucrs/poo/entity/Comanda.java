@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import java.time.LocalDateTime;
 import java.util.List;
 @Entity
@@ -18,7 +17,6 @@ public class Comanda {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "CODIGO_COMANDA", nullable = false, unique = true)
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String codigoComanda;
     @Column(name = "DATA_CRIACAO", nullable = false)
     private LocalDateTime dataCriacao;

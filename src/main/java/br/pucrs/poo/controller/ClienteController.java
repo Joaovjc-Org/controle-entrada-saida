@@ -4,18 +4,16 @@ import br.pucrs.poo.service.ClienteService;
 import br.pucrs.poo.view.ClienteView;
 import java.util.List;
 import java.util.Scanner;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 
-
+@AllArgsConstructor
 public class ClienteController {
-    private ClienteService clienteService;
+    private final ClienteService clienteService;
     private ClienteView view;
     private Scanner scanner;
 
-    
-
-    public List <ClienteDTO> listarClientes() {
-       return clienteService.listarClientes();
+    public List<ClienteDTO> listarClientes() {
+        return clienteService.listarClientes();
     }
     
     public ClienteDTO criarCliente(ClienteDTO cliente) {
