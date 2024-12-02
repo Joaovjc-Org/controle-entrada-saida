@@ -76,7 +76,7 @@ public class ComandaService {
         // Agrupar os gastos por cliente
         Map<String, BigDecimal> gastosPorCliente = comandasDoDia.stream()
                 .collect(Collectors.groupingBy(
-                        Comanda::getNomeCliente,
+                        Comanda::getClienteNome,
                         Collectors.reducing(
                                 BigDecimal.ZERO,
                                 comanda -> comanda.getItens().stream()
