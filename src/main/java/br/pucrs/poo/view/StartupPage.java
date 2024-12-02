@@ -13,6 +13,8 @@ public class StartupPage {
     private final StartupPageController startupPageController;
     private final ComandaService comandaService;
     private final ItemView itemView;
+    private CadastroComandaView cadastroComandaView;
+
     public void iniciarInterface() {
         boolean executar = true;
         Scanner scanner = new Scanner(System.in);
@@ -39,21 +41,12 @@ public class StartupPage {
                 case 2 -> {
                     try {
                         comandaService.verificarSistemaAtivo();
-                        CadastroComandaView.fazerPedido();
+                        cadastroComandaView.fazerPedido();
                     } catch (RuntimeException e) {
                         System.out.println(e.getMessage());
                     }
                 }
-                case 3 -> {
-                    System.out.print("Digite o código da comanda para fechar a conta: ");
-                    String codigoComanda = scanner.nextLine();
-                    try {
-                        startupPageController.fecharConta(codigoComanda);
-                        System.out.println("Conta fechada com sucesso!");
-                    } catch (RuntimeException e) {
-                        System.out.println("Erro ao fechar conta: " + e.getMessage());
-                    }
-                }
+                case 3 -> fecharConta();
                 case 4 -> startupPageController.fecharDia();
                 case 5 -> gerarBalanceteDiario();
                 case 6 -> startupPageController.iniciarNovoDia();
@@ -61,22 +54,6 @@ public class StartupPage {
             }
         }
         scanner.close();
-    }
-
-
-    private void gerarBalanceteDiario() {
-        System.out.println("\n--- Balancete Diário ---");
-        List<GastoTotalDTO> balancete = startupPageController.gerarBalanceteDiario();
-
-        if (balancete.isEmpty()) {
-            System.out.println("Nenhum gasto registrado para hoje.");
-            return;
-        }
-
-        for (GastoTotalDTO item : balancete) {
-            System.out.printf("Cliente: %s | Total Gasto: R$ %.2f%n",
-                    item.nomeCliente(), item.gastoTotal());
-        }
     }
 
     private void fecharConta() {
@@ -91,9 +68,6 @@ public class StartupPage {
             System.out.println("Erro: " + e.getMessage());
         }
     }
-
-
-
 
     private void gerarBalanceteDiario() {
         System.out.println("\n--- Balancete Diário ---");

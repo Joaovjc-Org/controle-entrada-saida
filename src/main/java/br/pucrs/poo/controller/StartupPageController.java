@@ -5,7 +5,9 @@ import br.pucrs.poo.service.ComandaService;
 import lombok.RequiredArgsConstructor;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 @RequiredArgsConstructor(onConstructor_ = @__(@Autowired))
+@Component
 public class StartupPageController {
     private final ComandaService comandaService;
     private final BalanceteService balanceteService;

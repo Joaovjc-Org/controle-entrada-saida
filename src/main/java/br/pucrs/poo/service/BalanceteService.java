@@ -1,20 +1,18 @@
 package br.pucrs.poo.service;
-
 import br.pucrs.poo.dto.GastoTotalDTO;
 import br.pucrs.poo.entity.Comanda;
 import br.pucrs.poo.repository.ComandaRepository;
-
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BalanceteService {
-@Autowired
+    @Autowired
     private ComandaRepository comandaRepository;
 
     public BalanceteService(ComandaRepository comandaRepository) {
@@ -30,7 +28,8 @@ public class BalanceteService {
 
     public List<GastoTotalDTO> gerarBalanceteDiario() {
 
-        List<Comanda> comandasDoDia = comandaRepository.findAllByDataAtual();
+
+        List<Comanda> comandasDoDia = recuperarComandasDoDia();
 
         // Agrupar os gastos por cliente
         List<GastoTotalDTO> gastosPorCliente = comandasDoDia.stream()
@@ -40,9 +39,15 @@ public class BalanceteService {
         return gastosPorCliente;
     }
 
+    private List<Comanda> recuperarComandasDoDia() {
+        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0));
+        LocalDateTime endDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(23, 59,59));
+        List<Comanda> comandasDoDia = comandaRepository.findAllByDataCriacaoBetween(startDate, LocalDateTime.now());
+        return comandasDoDia;
+    }
     public void fecharDia() {
 
-        List<Comanda> comandasDoDia = comandaRepository.findAllByDataAtual();
+        List<Comanda> comandasDoDia = recuperarComandasDoDia();
 
 
         for (Comanda comanda : comandasDoDia) {

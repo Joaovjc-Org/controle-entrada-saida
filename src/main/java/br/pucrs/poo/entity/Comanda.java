@@ -35,8 +35,6 @@ public class Comanda {
     private Cliente cliente;
     @ManyToOne(targetEntity = Folha.class, fetch = FetchType.LAZY)
     private Folha folha;
-    @Column(name = "DATA_FECHAMENTO", nullable = false)
-    private LocalDateTime dataFechamento;
     public void addAllGastos(Collection <Gasto> gastos){
         gastos.addAll(gastos);
     }

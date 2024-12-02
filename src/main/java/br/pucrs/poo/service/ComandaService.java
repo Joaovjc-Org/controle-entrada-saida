@@ -134,7 +134,7 @@ public class ComandaService {
 
         Comanda comanda = comandaOptional.get();
 
-        comanda.setDataFechamento(LocalDateTime.now()); // Supondo que há um campo data de fechamento
+        comanda.setDataPagamento(LocalDateTime.now());
 
         comandaRepository.save(comanda); // Atualiza a comanda com as informações de fechamento.
     }
