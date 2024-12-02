@@ -1,12 +1,10 @@
 package br.pucrs.poo.view;
-
-import lombok.AllArgsConstructor;
-
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Scanner;
-
-@AllArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class StartupPage {
-    private ItemView itemView;
+    private final ItemView itemView;
     public void iniciarInterface() {
         boolean var1 = true;
         Scanner scanner = new Scanner(System.in);

@@ -2,14 +2,13 @@ package br.pucrs.poo.controller;
 import br.pucrs.poo.dto.ClienteDTO;
 import br.pucrs.poo.service.ClienteService;
 import java.util.List;
-import lombok.AllArgsConstructor;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-@Component
-@AllArgsConstructor
+@Component("ClienteController")
 public class ClienteController {
     @Autowired
-    private final ClienteService clienteService;
+    private ClienteService clienteService;
     public List<ClienteDTO> listarClientes() {
         return clienteService.listarClientes();
     }
@@ -25,5 +24,8 @@ public class ClienteController {
 
     public List<ClienteDTO> buscarClientesPorNome(String nome) {
         return clienteService.buscarClientesPorNome(nome);
+    }
+    public Optional<ClienteDTO> buscarClientesPorCPF(String cpf) {
+        return clienteService.buscarClientesPorCPF(cpf);
     }
 }

@@ -2,19 +2,14 @@ package br.pucrs.poo.view;
 
 import br.pucrs.poo.dto.ComandaDTO;
 import br.pucrs.poo.service.ComandaService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Scanner;
-
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CadastroComandaView {
-
     private final ComandaService comandaService;
     private final Scanner scanner;
-
-    public CadastroComandaView(ComandaService comandaService) {
-        this.comandaService = comandaService;
-        this.scanner = new Scanner(System.in);
-    }
-
     public void criarComanda() {
         System.out.println("\n=== Cadastro de Comanda ===");
 

@@ -2,17 +2,15 @@ package br.pucrs.poo.view;
 
 import br.pucrs.poo.controller.ClienteController;
 import br.pucrs.poo.dto.ClienteDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Scanner;
-
+@Component
 public class CadastroClienteView {
-
-    private final ClienteController clienteController;
-
-    public CadastroClienteView(ClienteController clienteController) {
-        this.clienteController = clienteController;
-    }
+    @Autowired
+    private ClienteController clienteController;
 
     public void iniciarInterface() {
         Scanner scanner = new Scanner(System.in);

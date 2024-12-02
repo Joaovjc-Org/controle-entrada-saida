@@ -4,18 +4,16 @@ import br.pucrs.poo.dto.ComandaDTO;
 import br.pucrs.poo.entity.Comanda;
 import br.pucrs.poo.mapper.ComandaMapper;
 import br.pucrs.poo.repository.ComandaRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-
+@Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ComandaService {
-
     private final ComandaRepository comandaRepository;
-
-    public ComandaService(ComandaRepository comandaRepository) {
-        this.comandaRepository = comandaRepository;
-    }
-
     public ComandaDTO criarComanda(ComandaDTO comandaDTO) {
         ComandaDTO comandaComData = new ComandaDTO(
             comandaDTO.getId(),

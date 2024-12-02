@@ -46,4 +46,9 @@ public class ClienteService {
                 .map(ClienteMapper.INSTANCE::toClienteDTO)
                 .collect(Collectors.toList());
     }
+
+    public Optional<ClienteDTO> buscarClientesPorCPF(String cpf) {
+        return clienteRepository.findByCpf(cpf)
+                .map(c->new ClienteDTO(c.getNome(),c.getCpf(),c.getTelefone(),c.getEmail()));
+    }
 }

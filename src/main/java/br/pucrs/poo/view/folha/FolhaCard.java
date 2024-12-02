@@ -1,10 +1,13 @@
 package br.pucrs.poo.view.folha;
+import org.springframework.stereotype.Component;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.List;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.ORANGE;
+@Component
 public class FolhaCard extends JPanel {
     public FolhaCard() {
         this.setLayout(new BorderLayout(8,6));

@@ -1,12 +1,14 @@
 package br.pucrs.poo.controller;
 import br.pucrs.poo.dto.ItemDTO;
 import br.pucrs.poo.service.ItemService;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import java.util.List;
-@AllArgsConstructor
+@Component
 public class ItemController {
-    private ItemService itemService;
-    public List<ItemDTO> recuperarTodosItensCadastrados(){
-        return itemService.recuperarTodosItens();
-    }
+//    @Autowired
+//    private ItemService itemService;
+//    public List<ItemDTO> recuperarTodosItensCadastrados(){
+//        return itemService.recuperarTodosItens();
+//    }
 }
