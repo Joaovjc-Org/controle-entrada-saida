@@ -12,22 +12,6 @@ public class CadastroComandaView {
     private final Scanner scanner;
 
 
-    public void exibirBalancete() {
-        System.out.println("\n--- Balancete do Dia ---");
-
-        List<BalanceteDTO> balancete = comandaController.gerarBalanceteDiario();
-
-        if (balancete.isEmpty()) {
-            System.out.println("Nenhum consumo registrado no dia.");
-        } else {
-            for (BalanceteDTO cliente : balancete) {
-                System.out.printf("Cliente: %s | Total Gasto: R$ %.2f%n",
-                        cliente.getNomeCliente(),
-                        cliente.getTotalGasto());
-            }
-        }
-    }
-
     public CadastroComandaView(ComandaController comandaController) {
         this.comandaController = comandaController;
         this.scanner = new Scanner(System.in);

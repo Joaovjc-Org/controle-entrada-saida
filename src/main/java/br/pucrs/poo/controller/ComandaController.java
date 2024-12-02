@@ -1,6 +1,5 @@
 package br.pucrs.poo.controller;
 
-import br.pucrs.poo.dto.BalanceteDTO;
 import br.pucrs.poo.dto.ComandaDTO;
 import br.pucrs.poo.service.ComandaService;
 import java.util.List;
@@ -8,9 +7,7 @@ import java.util.List;
 public class ComandaController {
     private final ComandaService comandaService;
 
-    public List<BalanceteDTO> gerarBalanceteDiario() {
-        return comandaService.gerarBalanceteDiario();
-    }
+    
 
     public ComandaController(ComandaService comandaService) {
         this.comandaService = comandaService;

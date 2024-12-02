@@ -19,6 +19,7 @@ public class ComandaService {
 
     private final ComandaRepository comandaRepository;
 
+    
     public ComandaService(ComandaRepository comandaRepository) {
         this.comandaRepository = comandaRepository;
     }
@@ -69,28 +70,6 @@ public class ComandaService {
         comandaRepository.save(comanda); // Atualiza a comanda com o novo débito.
     }
 
-    public List<BalanceteDTO> gerarBalanceteDiario() {
-        // Recuperar todas as comandas do dia
-        List<Comanda> comandasDoDia = comandaRepository.findAllByDataAtual();
-
-        // Agrupar os gastos por cliente
-        Map<String, BigDecimal> gastosPorCliente = comandasDoDia.stream()
-                .collect(Collectors.groupingBy(
-                        Comanda::getClienteNome,
-                        Collectors.reducing(
-                                BigDecimal.ZERO,
-                                comanda -> comanda.getItens().stream()
-                                        .map(item -> item.getPreco().multiply(BigDecimal.valueOf(item.getQuantidade())))
-                                        .reduce(BigDecimal.ZERO, BigDecimal::add),
-                                BigDecimal::add
-                        )
-                ));
-
-        // Transformar os dados em DTOs
-        return gastosPorCliente.entrySet().stream()
-                .map(entry -> new BalanceteDTO(entry.getKey(), entry.getValue()))
-                .toList();
-    }
 
     
 }
