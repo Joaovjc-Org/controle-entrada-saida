@@ -1,14 +1,9 @@
 package br.pucrs.poo.view;
-
-
 import br.pucrs.poo.controller.ClienteController;
 import br.pucrs.poo.dto.ClienteDTO;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-
-
-import java.util.List;
 @Component
 public class ClienteView {
     @Autowired

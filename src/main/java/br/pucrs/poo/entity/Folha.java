@@ -21,4 +21,5 @@ public class Folha {
     private LocalDate dataFechamento;
     @Column(name = "FECHADO")
     private boolean fechado;
+    
 }

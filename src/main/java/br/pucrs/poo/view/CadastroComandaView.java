@@ -1,15 +1,36 @@
 package br.pucrs.poo.view;
-
+import br.pucrs.poo.controller.ComandaController;
 import br.pucrs.poo.dto.ComandaDTO;
-import br.pucrs.poo.service.ComandaService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-
+import br.pucrs.poo.controller.StartupPageController;
 import java.util.Scanner;
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+@Component
 public class CadastroComandaView {
-    private final ComandaService comandaService;
-    private final Scanner scanner;
+    @Autowired
+    private ComandaController comandaController;
+    @Autowired
+    private StartupPageController startupPageController;
+    private Scanner scanner;
+
+    public void fazerPedido() {
+        System.out.print("Digite o ID da comanda: ");
+        Long comandaId = scanner.nextLong();
+
+        System.out.print("Digite o ID do item: ");
+        Long itemId = scanner.nextLong();
+
+        System.out.print("Digite a quantidade: ");
+        int quantidade = scanner.nextInt();
+
+        startupPageController.fazerPedido(comandaId, itemId, quantidade);
+    }
+
+    public CadastroComandaView() {
+        this.scanner = new Scanner(System.in);
+    }
+
     public void criarComanda() {
         System.out.println("\n=== Cadastro de Comanda ===");
 
@@ -19,10 +40,8 @@ public class CadastroComandaView {
         System.out.print("Digite o ID da folha associada: ");
         Long folhaId = scanner.nextLong();
 
-        ComandaDTO novaComanda = new ComandaDTO(null, null, null, null, null, clienteId, folhaId);
-
         try {
-            ComandaDTO comandaCriada = comandaService.criarComanda(novaComanda);
+            ComandaDTO comandaCriada = comandaController.criarComanda(clienteId, folhaId);
             System.out.println("Comanda criada com sucesso!");
             System.out.println("Código da Comanda: " + comandaCriada.getCodigoComanda());
         } catch (RuntimeException e) {
@@ -35,7 +54,7 @@ public class CadastroComandaView {
         Long id = scanner.nextLong();
 
         try {
-            ComandaDTO comanda = comandaService.buscarComandaPorId(id);
+            ComandaDTO comanda = comandaController.buscarComandaPorId(id);
             System.out.println("Detalhes da Comanda:");
             System.out.println(comanda);
         } catch (RuntimeException e) {

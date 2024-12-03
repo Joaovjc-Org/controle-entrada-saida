@@ -1,12 +1,13 @@
 package br.pucrs.poo.view;
 import br.pucrs.poo.controller.ItemController;
 import br.pucrs.poo.dto.ItemDTO;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+@Component
 public class ItemView {
-    private final ItemController itemController;
+    @Autowired
+    private ItemController itemController;
     public void displayItens() {
         System.out.println("\n--- Cardápio ---");
         List<ItemDTO> itens = itemController.recuperarTodosItensCadastrados();
