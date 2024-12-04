@@ -27,4 +27,4 @@ INSERT INTO CLIENTE (cpf,nome,email, telefone, data_cadastro) VALUES ( '00600028
 INSERT INTO CLIENTE (cpf,nome,email, telefone, data_cadastro) VALUES ( '29698657266', 'Rafaela Joana Antônia da Mota', 'rafaela_joana_damota@lctour.com.br', '83995909463', '2024-10-24')
 INSERT INTO CLIENTE (cpf,nome,email, telefone, data_cadastro) VALUES ( '86096843506', 'Anderson José Araújo', 'anderson.jose.araujo@ftcomercial.com.br', '84985195828', '2024-11-23')
 INSERT INTO CLIENTE (cpf,nome,email, telefone, data_cadastro) VALUES ( '55903765050', 'Manuel Kaique Tiago Assis', 'manuel.kaique.assis@gradu.if.ufrj.br', '86993853679', '2024-08-23')
-INSERT INTO CLIENTE (cpf,nome,email, telefone, data_cadastro) VALUES ( '08874202652', 'Ian Igor Corte Real', 'ian-cortereal76@mastria.com.br', '91997952132', '2024-11-22')
+INSERT INTO FOLHA (data_abertura, fechado) VALUES ('2024-12-03',false)

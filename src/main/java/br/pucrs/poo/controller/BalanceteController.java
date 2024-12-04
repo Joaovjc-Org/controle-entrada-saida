@@ -1,8 +1,7 @@
 package br.pucrs.poo.controller;
 
 import br.pucrs.poo.dto.GastoTotalDTO;
-import br.pucrs.poo.service.BalanceteService;
-import lombok.AllArgsConstructor;
+import br.pucrs.poo.service.FolhaService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -13,17 +12,27 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class BalanceteController {
     @Autowired
-
-    private final BalanceteService balanceteService;
-
-
+    private final FolhaService folhaService;
 
     public List<GastoTotalDTO> gerarBalanceteDiario() {
-        return balanceteService.gerarBalanceteDiario();
+        return folhaService.gerarBalanceteDiario();
     }
 
     public void fecharDia() {
-        balanceteService.fecharDia();
-        List<GastoTotalDTO> balancete = gerarBalanceteDiario();
+        try {
+            folhaService.fecharDia();
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void iniciarNovoDia() {
+        try {
+            folhaService.iniciarNovoDia();
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public boolean checarFolhaDoDiaAberta() {
+        return folhaService.checarFolhaDoDiaAberta();
     }
 }

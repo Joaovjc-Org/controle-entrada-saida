@@ -1,22 +1,21 @@
 package br.pucrs.poo.mapper;
-
+import br.pucrs.poo.dto.ComandaCriacaoDTO;
 import br.pucrs.poo.dto.ComandaDTO;
+import br.pucrs.poo.entity.Cliente;
 import br.pucrs.poo.entity.Comanda;
+import br.pucrs.poo.entity.Folha;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ComandaMapper {
-    ComandaMapper INSTANCE = Mappers.getMapper(ComandaMapper.class);
-
-    @Mapping(source = "gastos.id", target = "gastosIds") // Mapeia os IDs dos gastos
-    @Mapping(source = "cliente.id", target = "clienteId")
-    @Mapping(source = "folha.id", target = "folhaId")
     ComandaDTO toComandaDTO(Comanda comanda);
-
-    @Mapping(target = "gastos", ignore = true) // Ignora os relacionamentos complexos na criação
-    @Mapping(target = "cliente", ignore = true)
-    @Mapping(target = "folha", ignore = true)
-    Comanda toComanda(ComandaDTO comandaDTO);
+    @Mapping(target = "cliente", source = "clienteParam")
+    @Mapping(target = "folha", source = "folhaParam")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "dataPagamento", ignore = true)
+    @Mapping(target = "gastoTotal", ignore = true)
+    @Mapping(target = "gastos", ignore = true)
+    Comanda toComanda(ComandaCriacaoDTO comanda, Cliente clienteParam, Folha folhaParam);
 }

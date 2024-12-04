@@ -13,8 +13,8 @@ public class ClienteController {
         return clienteService.listarClientes();
     }
 
-    public ClienteDTO cadastrarCliente(String nome, String cpf) {
-        ClienteDTO novoCliente = new ClienteDTO(nome, cpf, "", "");
+    public ClienteDTO cadastrarCliente(String nome, String cpf, String telefone, String email) {
+        ClienteDTO novoCliente = new ClienteDTO(nome, cpf, telefone, email);
         return clienteService.cadastrarCliente(novoCliente);
     }
 

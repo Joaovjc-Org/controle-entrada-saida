@@ -1,15 +1,17 @@
 package br.pucrs.poo.service;
+import br.pucrs.poo.dto.ClienteDTO;
+import br.pucrs.poo.dto.ComandaCriacaoDTO;
 import br.pucrs.poo.dto.ComandaDTO;
-import br.pucrs.poo.entity.Comanda;
-import br.pucrs.poo.entity.Gasto;
-import br.pucrs.poo.entity.Item;
+import br.pucrs.poo.entity.*;
 import br.pucrs.poo.mapper.ComandaMapper;
 import br.pucrs.poo.repository.ComandaRepository;
-import br.pucrs.poo.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -19,18 +21,19 @@ import java.util.stream.IntStream;
 @Service
 public class ComandaService {
     private final ComandaRepository comandaRepository;
-    private final ItemRepository itemRepository;
+    private final ItemService itemService;
+    private final FolhaService folhaService;
+    private final ClienteService clienteService;
+    private final ComandaMapper comandaMapper;
 
-    public void adicionarItem(Long comandaId, Long itemId, int quantidade) {
-        Comanda comanda = comandaRepository.findById(comandaId)
+    public void adicionarItem(String codigoComanda, Long itemId, int quantidade) {
+        Comanda comanda = comandaRepository.findByCodigoComanda(codigoComanda)
                 .orElseThrow(() -> new RuntimeException("Comanda não encontrada!"));
 
-        Item item = itemRepository.findById(itemId)
+        Item item = itemService.recuperarItemPorId(itemId)
                 .orElseThrow(() -> new RuntimeException("Item não encontrado!"));
 
         BigDecimal valorTotalItem = item.getPreco().multiply(BigDecimal.valueOf(quantidade));
-
-
 
         List<Gasto> gastos = IntStream.range(0, quantidade)
                 .mapToObj(i -> Gasto.builder()
@@ -46,62 +49,26 @@ public class ComandaService {
         comandaRepository.save(comanda);
     }
 
-    private boolean sistemaAtivo = true;
-
-    public void fecharDia() {
-        if (!sistemaAtivo) {
-            throw new RuntimeException("O dia já foi encerrado!");
-        }
-
-        sistemaAtivo = false; // Bloqueia novos pedidos.
-
-        // Calcula o total de todas as comandas fechadas.
-        List<Comanda> comandas = comandaRepository.findAllByDataPagamentoNotNull();
-        BigDecimal totalDia = comandas.stream()
-                .map(Comanda::getGastoTotal)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        // Exibe o balancete do dia.
-        System.out.println("=== Balancete do Dia ===");
-        System.out.println("Total arrecadado: " + totalDia);
-        System.out.println("Número de comandas fechadas: " + comandas.size());
-    }
-
-    public void iniciarNovoDia() {
-        sistemaAtivo = true; // Permite novos pedidos.
-        System.out.println("Novo dia iniciado!");
-    }
-
-    // Valida se o sistema está ativo antes de aceitar novos pedidos.
-    public void verificarSistemaAtivo() {
-        if (!sistemaAtivo) {
-            throw new RuntimeException("Não é possível cadastrar novos pedidos. O dia foi encerrado!");
-        }
-    }
-
-    public ComandaDTO criarComanda(ComandaDTO comandaDTO) {
-        // Verificar se o cliente já possui uma comanda ativa.
+    @Transactional(propagation= Propagation.REQUIRED)
+    public ComandaDTO criarComanda(String cpf) {
+        Optional<Folha> folha = folhaService.recuperarFolhaDoDia();
+        if (folha.isEmpty()) throw new RuntimeException("Nao foi aberta uma folha!");
+        Cliente cliente = clienteService.buscarCliente(cpf)
+                .orElseThrow(() -> new RuntimeException("Problemas ao recuperar o cliente"));
         Optional<Comanda> comandaAtiva = comandaRepository
-                .findByClienteIdAndDataPagamentoIsNull(comandaDTO.getClienteId());
+                .findByClienteIdAndDataPagamentoIsNull(cliente.getId());
         if (comandaAtiva.isPresent()) {
             throw new RuntimeException("O cliente já possui uma comanda ativa!");
         }
+        ComandaCriacaoDTO comandaDTO = ComandaCriacaoDTO.builder()
+                .codigoComanda(String.valueOf(UUID.randomUUID()))
+                .dataCriacao(LocalDateTime.now())
+                .build();
 
-        // Gerar código único para a comanda.
-        String codigoComanda = UUID.randomUUID().toString();
-
-        ComandaDTO comandaComData = new ComandaDTO(
-                null,
-                codigoComanda,
-                LocalDateTime.now(),
-                null,
-                null,
-                comandaDTO.getClienteId(),
-                comandaDTO.getFolhaId());
-
-        Comanda comanda = ComandaMapper.INSTANCE.toComanda(comandaComData);
+        Comanda comanda = comandaMapper.toComanda(comandaDTO,cliente,folha.get());
         Comanda salva = comandaRepository.save(comanda);
-        return ComandaMapper.INSTANCE.toComandaDTO(salva);
+        System.out.println(salva);
+        return comandaMapper.toComandaDTO(salva);
     }
 
     public ComandaDTO buscarComandaPorId(Long id) {
@@ -109,7 +76,7 @@ public class ComandaService {
         if (comandaOptional.isEmpty()) {
             throw new RuntimeException("Comanda não encontrada!");
         }
-        return ComandaMapper.INSTANCE.toComandaDTO(comandaOptional.get());
+        return comandaMapper.toComandaDTO(comandaOptional.get());
     }
 
     public void adicionarDebito(String codigoComanda, Gasto gasto) {

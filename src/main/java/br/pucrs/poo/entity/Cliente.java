@@ -1,17 +1,17 @@
 package br.pucrs.poo.entity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-@Entity
-@Table(name = "CLIENTE")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(doNotUseGetters = true)
+@Builder
+@Entity
+@Table(name = "CLIENTE")
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,8 @@ public class Cliente {
     @Column(name = "TELEFONE", nullable=false)
     private String telefone;
     @Column(name = "DATA_CADASTRO", nullable=false)
+    @Builder.Default
     private LocalDateTime dataCadastro = LocalDateTime.now();
-    @OneToMany(fetch = FetchType.LAZY, targetEntity = Comanda.class)
+    @OneToMany(mappedBy = "cliente")
     private List<Comanda> comandas;
 }

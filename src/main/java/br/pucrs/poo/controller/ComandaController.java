@@ -11,12 +11,17 @@ public class ComandaController {
     @Autowired
     private ComandaService comandaService;
 
-    public ComandaDTO criarComanda(Long clienteId, Long folhaId) {
-        ComandaDTO novaComanda = new ComandaDTO(null, null, null, null, null, clienteId, folhaId);
-        return comandaService.criarComanda(novaComanda);
+    public ComandaDTO criarComanda(String cpf) {
+        return comandaService.criarComanda(cpf);
     }
-
     public ComandaDTO buscarComandaPorId(Long id) {
         return comandaService.buscarComandaPorId(id);
+    }
+    public void fecharConta(String codigoComanda) {
+        comandaService.fecharConta(codigoComanda);
+    }
+    public void fazerPedido(String codigoComanda, Long itemId, int quantidade) {
+        comandaService.adicionarItem(codigoComanda, itemId, quantidade);
+        System.out.println("Item adicionado com sucesso à comanda.");
     }
 }

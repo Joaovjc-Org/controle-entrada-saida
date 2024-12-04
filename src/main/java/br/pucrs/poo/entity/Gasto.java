@@ -2,13 +2,14 @@ package br.pucrs.poo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
-@Entity
-@Table(name = "GASTO")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(doNotUseGetters = true)
 @Builder
+@ToString(doNotUseGetters = true)
+@Entity
+@Table(name = "GASTO")
 public class Gasto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,4 +18,7 @@ public class Gasto {
     private Item item;
     @Column(name="VALOR_PAGO", nullable = false)
     private BigDecimal valorPago;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Comanda.class)
+    @JoinColumn(name = "COMANDA_ID")
+    private Comanda Comanda;
 }

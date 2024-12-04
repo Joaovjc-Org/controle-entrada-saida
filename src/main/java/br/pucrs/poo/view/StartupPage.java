@@ -1,17 +1,19 @@
 package br.pucrs.poo.view;
-import br.pucrs.poo.controller.StartupPageController;
+import br.pucrs.poo.controller.BalanceteController;
+import br.pucrs.poo.controller.ComandaController;
 import br.pucrs.poo.dto.GastoTotalDTO;
-import br.pucrs.poo.service.ComandaService;
+
 import java.util.List;
 import java.util.Scanner;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 @Component
-@RequiredArgsConstructor(onConstructor_ = @__(@Autowired))
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class StartupPage {
-    private final StartupPageController startupPageController;
-    private final ComandaService comandaService;
+    private final ComandaController comandaController;
+    private final BalanceteController balanceteController;
     private final ItemView itemView;
     private CadastroComandaView cadastroComandaView;
 
@@ -40,16 +42,17 @@ public class StartupPage {
                 case 1 -> itemView.displayItens();
                 case 2 -> {
                     try {
-                        comandaService.verificarSistemaAtivo();
-                        cadastroComandaView.fazerPedido();
+                        if(!balanceteController.checarFolhaDoDiaAberta()){
+                            System.err.println("Nao existe folha disponivel");
+                        }else cadastroComandaView.fazerPedido();
                     } catch (RuntimeException e) {
                         System.out.println(e.getMessage());
                     }
                 }
                 case 3 -> fecharConta();
-                case 4 -> startupPageController.fecharDia();
+                case 4 -> balanceteController.fecharDia();
                 case 5 -> gerarBalanceteDiario();
-                case 6 -> startupPageController.iniciarNovoDia();
+                case 6 -> balanceteController.iniciarNovoDia();
                 default -> System.out.println("Opção inválida!");
             }
         }
@@ -59,11 +62,11 @@ public class StartupPage {
     private void fecharConta() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Digite o ID da comanda: ");
+        System.out.print("Digite o Codigo da comanda: ");
         String comandaId = scanner.nextLine();
 
         try {
-            startupPageController.fecharConta(comandaId);
+            comandaController.fecharConta(comandaId);
         } catch (RuntimeException e) {
             System.out.println("Erro: " + e.getMessage());
         }
@@ -71,7 +74,7 @@ public class StartupPage {
 
     private void gerarBalanceteDiario() {
         System.out.println("\n--- Balancete Diário ---");
-        List<GastoTotalDTO> balancete = startupPageController.gerarBalanceteDiario();
+        List<GastoTotalDTO> balancete = balanceteController.gerarBalanceteDiario();
 
         if (balancete.isEmpty()) {
             System.out.println("Nenhum gasto registrado para hoje.");

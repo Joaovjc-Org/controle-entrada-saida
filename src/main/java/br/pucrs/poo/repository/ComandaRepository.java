@@ -9,8 +9,6 @@ import java.util.Optional;
 @Repository
 public interface ComandaRepository extends JpaRepository<Comanda, Long> {
     Optional<Comanda> findById(Long id);
-    Optional<Comanda> findByClienteIdAndDataPagamentoIsNull(Long clienteId);
+    Optional<Comanda> findByClienteIdAndDataPagamentoIsNull(Long id);
     Optional<Comanda> findByCodigoComanda(String codigoComanda);
-    List<Comanda> findAllByDataCriacaoBetween(LocalDateTime data, LocalDateTime data2);
-    List<Comanda> findAllByDataPagamentoNotNull();
 }
