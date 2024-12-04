@@ -1,27 +1,21 @@
 package br.pucrs.poo;
 import br.pucrs.poo.view.TelaPrincipalFrame;
-import org.springframework.boot.Banner;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-import javax.swing.*;
-
+import org.springframework.context.ConfigurableApplicationContext;
+import java.awt.*;
 @SpringBootApplication
-@EnableJpaRepositories
-public class Application implements CommandLineRunner {
+public class Application {
     public static void main(String[] args) {
-        new SpringApplicationBuilder(Application.class)
-                .web(WebApplicationType.NONE)
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(Application.class)
                 .headless(false)
-                .bannerMode(Banner.Mode.OFF)
+                .web(WebApplicationType.NONE)
                 .run(args);
-    }
-    @Override
-    public void run(String... args) {
-        SwingUtilities.invokeLater(() -> TelaPrincipalFrame.startGUI(args));
+        EventQueue.invokeLater(() -> {
+            TelaPrincipalFrame appFrame = context.getBean(TelaPrincipalFrame.class);
+            appFrame.setVisible(true);
+        });
     }
 }
 

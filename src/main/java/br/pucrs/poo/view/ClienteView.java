@@ -1,20 +1,12 @@
 package br.pucrs.poo.view;
-
-
 import br.pucrs.poo.controller.ClienteController;
 import br.pucrs.poo.dto.ClienteDTO;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 @Component
-@RequiredArgsConstructor
 public class ClienteView {
     @Autowired
-    
     private ClienteController clienteController;
 
     public void mostrarClientes() {

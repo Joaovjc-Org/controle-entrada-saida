@@ -2,7 +2,6 @@ package br.pucrs.poo.view;
 
 import br.pucrs.poo.controller.ClienteController;
 import br.pucrs.poo.dto.ClienteDTO;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -11,9 +10,8 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 @Component
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CadastroClienteView {
-    @Autowired
     private final ClienteController clienteController;
 
     public void iniciarInterface() {
@@ -55,7 +53,7 @@ public class CadastroClienteView {
             System.out.print("Digite o CPF do cliente: ");
             String cpf = scanner.nextLine();
 
-            ClienteDTO cliente = clienteController.cadastrarCliente(nome, cpf);
+            ClienteDTO cliente = clienteController.cadastrarCliente(nome, cpf, "", "");
             System.out.println("Cliente cadastrado com sucesso: " + cliente);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());

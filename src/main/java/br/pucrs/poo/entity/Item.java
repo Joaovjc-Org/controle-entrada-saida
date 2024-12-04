@@ -1,16 +1,16 @@
 package br.pucrs.poo.entity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
 import java.math.BigDecimal;
-@Entity
-@Table(name = "ITEM")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @ToString(doNotUseGetters = true)
+@Entity
+@Table(name = "ITEM")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
