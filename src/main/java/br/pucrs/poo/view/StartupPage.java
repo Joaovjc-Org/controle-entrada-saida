@@ -1,5 +1,5 @@
 package br.pucrs.poo.view;
-import br.pucrs.poo.controller.BalanceteController;
+import br.pucrs.poo.controller.FolhaController;
 import br.pucrs.poo.controller.ComandaController;
 import br.pucrs.poo.dto.GastoTotalDTO;
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class StartupPage {
     private final ComandaController comandaController;
-    private final BalanceteController balanceteController;
+    private final FolhaController folhaController;
     private final ItemView itemView;
     private CadastroComandaView cadastroComandaView;
 
@@ -42,7 +42,7 @@ public class StartupPage {
                 case 1 -> itemView.displayItens();
                 case 2 -> {
                     try {
-                        if(!balanceteController.checarFolhaDoDiaAberta()){
+                        if(!folhaController.checarFolhaDoDiaAberta()){
                             System.err.println("Nao existe folha disponivel");
                         }else cadastroComandaView.fazerPedido();
                     } catch (RuntimeException e) {
@@ -50,9 +50,9 @@ public class StartupPage {
                     }
                 }
                 case 3 -> fecharConta();
-                case 4 -> balanceteController.fecharDia();
+                case 4 -> folhaController.fecharDia();
                 case 5 -> gerarBalanceteDiario();
-                case 6 -> balanceteController.iniciarNovoDia();
+                case 6 -> folhaController.iniciarNovoDia();
                 default -> System.out.println("Opção inválida!");
             }
         }
@@ -74,7 +74,7 @@ public class StartupPage {
 
     private void gerarBalanceteDiario() {
         System.out.println("\n--- Balancete Diário ---");
-        List<GastoTotalDTO> balancete = balanceteController.gerarBalanceteDiario();
+        List<GastoTotalDTO> balancete = folhaController.gerarBalanceteDiario();
 
         if (balancete.isEmpty()) {
             System.out.println("Nenhum gasto registrado para hoje.");

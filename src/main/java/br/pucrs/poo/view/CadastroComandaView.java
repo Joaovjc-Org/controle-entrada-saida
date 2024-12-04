@@ -1,6 +1,6 @@
 package br.pucrs.poo.view;
 import br.pucrs.poo.controller.ComandaController;
-import br.pucrs.poo.dto.ComandaDTO;
+import br.pucrs.poo.dto.CodigoComandaDTO;
 
 import java.util.Scanner;
 
@@ -32,7 +32,7 @@ public class CadastroComandaView {
         String cpf = scanner.next();
 
         try {
-            ComandaDTO comandaCriada = comandaController.criarComanda(cpf);
+            CodigoComandaDTO comandaCriada = comandaController.criarComanda(cpf);
             System.out.println("Comanda criada com sucesso!");
             System.out.println("Código da Comanda: " + comandaCriada.codigoComanda());
         } catch (RuntimeException e) {
@@ -46,7 +46,7 @@ public class CadastroComandaView {
         Long id = scanner.nextLong();
 
         try {
-            ComandaDTO comanda = comandaController.buscarComandaPorId(id);
+            CodigoComandaDTO comanda = comandaController.buscarComandaPorId(id);
             System.out.println("Detalhes da Comanda:");
             System.out.println(comanda);
         } catch (RuntimeException e) {

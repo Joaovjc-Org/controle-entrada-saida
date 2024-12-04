@@ -1,7 +1,6 @@
 package br.pucrs.poo.service;
-import br.pucrs.poo.dto.ClienteDTO;
+import br.pucrs.poo.dto.CodigoComandaDTO;
 import br.pucrs.poo.dto.ComandaCriacaoDTO;
-import br.pucrs.poo.dto.ComandaDTO;
 import br.pucrs.poo.entity.*;
 import br.pucrs.poo.mapper.ComandaMapper;
 import br.pucrs.poo.repository.ComandaRepository;
@@ -50,8 +49,8 @@ public class ComandaService {
     }
 
     @Transactional(propagation= Propagation.REQUIRED)
-    public ComandaDTO criarComanda(String cpf) {
-        Optional<Folha> folha = folhaService.recuperarFolhaDoDia();
+    public CodigoComandaDTO criarComanda(String cpf) {
+        Optional<Folha> folha = folhaService.recuperarFolhaDoDiaOptional();
         if (folha.isEmpty()) throw new RuntimeException("Nao foi aberta uma folha!");
         Cliente cliente = clienteService.buscarCliente(cpf)
                 .orElseThrow(() -> new RuntimeException("Problemas ao recuperar o cliente"));
@@ -71,7 +70,7 @@ public class ComandaService {
         return comandaMapper.toComandaDTO(salva);
     }
 
-    public ComandaDTO buscarComandaPorId(Long id) {
+    public CodigoComandaDTO buscarComandaPorId(Long id) {
         Optional<Comanda> comandaOptional = comandaRepository.findById(id);
         if (comandaOptional.isEmpty()) {
             throw new RuntimeException("Comanda não encontrada!");

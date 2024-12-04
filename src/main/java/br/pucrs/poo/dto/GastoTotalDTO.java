@@ -1,7 +1,3 @@
 package br.pucrs.poo.dto;
-
-import java.math.BigDecimal;
-
-public record GastoTotalDTO (String nomeCliente, BigDecimal gastoTotal){   
-    
+public record GastoTotalDTO (String codigoComanda, String gastoTotal, String nomeCliente, boolean fechada){
 }

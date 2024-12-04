@@ -1,7 +1,7 @@
 package br.pucrs.poo.mapper;
 
+import br.pucrs.poo.dto.CodigoComandaDTO;
 import br.pucrs.poo.dto.ComandaCriacaoDTO;
-import br.pucrs.poo.dto.ComandaDTO;
 import br.pucrs.poo.entity.Cliente;
 import br.pucrs.poo.entity.Comanda;
 import br.pucrs.poo.entity.Folha;
@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-12-03T22:00:03-0300",
+    date = "2024-12-04T15:13:57-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.5 (Amazon.com Inc.)"
 )
 @Component
 public class ComandaMapperImpl implements ComandaMapper {
 
     @Override
-    public ComandaDTO toComandaDTO(Comanda comanda) {
+    public CodigoComandaDTO toComandaDTO(Comanda comanda) {
         if ( comanda == null ) {
             return null;
         }
@@ -26,9 +26,9 @@ public class ComandaMapperImpl implements ComandaMapper {
 
         codigoComanda = comanda.getCodigoComanda();
 
-        ComandaDTO comandaDTO = new ComandaDTO( codigoComanda );
+        CodigoComandaDTO codigoComandaDTO = new CodigoComandaDTO( codigoComanda );
 
-        return comandaDTO;
+        return codigoComandaDTO;
     }
 
     @Override

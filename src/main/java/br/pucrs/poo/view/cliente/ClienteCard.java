@@ -2,7 +2,7 @@ package br.pucrs.poo.view.cliente;
 import br.pucrs.poo.controller.ClienteController;
 import br.pucrs.poo.controller.ComandaController;
 import br.pucrs.poo.dto.ClienteDTO;
-import br.pucrs.poo.dto.ComandaDTO;
+import br.pucrs.poo.dto.CodigoComandaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
+import static br.pucrs.poo.view.utils.PopupUtils.envolverEmCampoDeTexto;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.ORANGE;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -127,23 +128,12 @@ public class ClienteCard extends JPanel {
                                 "comanda", ERROR_MESSAGE)
                 );
     }
-
-    private JScrollPane envolverEmCampoDeTexto(String s) {
-        JTextArea ta = new JTextArea(10, 10);
-        ta.setText(s);
-        ta.setWrapStyleWord(true);
-        ta.setLineWrap(true);
-        ta.setCaretPosition(0);
-        ta.setEditable(false);
-        return new JScrollPane(ta);
-    }
-
     private Optional<String> criarComanda(ClienteDTO clienteDTO) {
         SwingWorker<Optional<String>, Void> sw = new SwingWorker<>() {
             @Override
             protected Optional<String> doInBackground() {
                 return Optional.of(comandaController.criarComanda(clienteDTO.cpf()))
-                        .map(ComandaDTO::codigoComanda);
+                        .map(CodigoComandaDTO::codigoComanda);
             }
         };
         sw.run();
