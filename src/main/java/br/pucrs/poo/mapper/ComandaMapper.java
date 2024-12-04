@@ -1,6 +1,6 @@
 package br.pucrs.poo.mapper;
 import br.pucrs.poo.dto.ComandaCriacaoDTO;
-import br.pucrs.poo.dto.ComandaDTO;
+import br.pucrs.poo.dto.CodigoComandaDTO;
 import br.pucrs.poo.entity.Cliente;
 import br.pucrs.poo.entity.Comanda;
 import br.pucrs.poo.entity.Folha;
@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ComandaMapper {
-    ComandaDTO toComandaDTO(Comanda comanda);
+    CodigoComandaDTO toComandaDTO(Comanda comanda);
     @Mapping(target = "cliente", source = "clienteParam")
     @Mapping(target = "folha", source = "folhaParam")
     @Mapping(target = "id", ignore = true)

@@ -1,5 +1,6 @@
 package br.pucrs.poo.controller;
 
+import br.pucrs.poo.dto.FolhaDTO;
 import br.pucrs.poo.dto.GastoTotalDTO;
 import br.pucrs.poo.service.FolhaService;
 import lombok.RequiredArgsConstructor;
@@ -10,14 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
-public class BalanceteController {
+public class FolhaController {
     @Autowired
     private final FolhaService folhaService;
 
     public List<GastoTotalDTO> gerarBalanceteDiario() {
         return folhaService.gerarBalanceteDiario();
     }
-
+    public FolhaDTO recuperarFolhaDoDia() {
+        return folhaService.recuperarFolhaDoDia();
+    }
     public void fecharDia() {
         try {
             folhaService.fecharDia();

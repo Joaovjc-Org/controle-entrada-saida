@@ -15,6 +15,7 @@ public class Gasto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Item.class)
+    @JoinColumn(name = "ITEM_ID")
     private Item item;
     @Column(name="VALOR_PAGO", nullable = false)
     private BigDecimal valorPago;

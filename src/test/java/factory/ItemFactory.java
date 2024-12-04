@@ -11,7 +11,6 @@ public class ItemFactory {
                 .mapToObj(ItemFactory::item)
                 .toList();
     }
-
     private static ItemDTO item(int i) {
         return ItemDTO.builder()
                 .nome("ITEM: "+i)
